@@ -3,4 +3,5 @@
 Try to build php project on docker
 
 ## Prerequisites
-- docker image for php need to use **apache version**
+- Docker image for php need to use **apache version**
+- Must to enable plugin that need to use in **.ini file**

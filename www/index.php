@@ -1,1 +1,5 @@
-<?php phpinfo();
+<?php 
+include("./database.php")
+
+// phpinfo()
+?>

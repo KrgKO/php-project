@@ -6,8 +6,7 @@ services:
     container_name: phpserver
     volumes:
       - ./www/:/var/www/html
-    ports:
-      - 9000:9000
+      - ./php-config/:/usr/local/etc/php
   db:
     image: mariadb:latest
     container_name: phpdb
@@ -19,6 +18,13 @@ services:
       - MYSQL_DATABASE=maindb
       - MYSQL_USER=root
       - MYSQL_PASSWORD=root
+  pma:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    ports:
+      - 8101:80
+
+  # should stay last
   nginx:
     image: nginx:latest
     container_name: phphost
@@ -29,8 +35,3 @@ services:
       - php
     ports:
       - 8100:80
-  pma:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin
-    ports:
-      - "8000:80"
