@@ -1,18 +1,36 @@
-version: "3"
+version: "2"
 services:
   php:
-    image: php:7.3-apache
+    image: php:7.3-apache-manual
+    build: .
     container_name: phpserver
     volumes:
-      - ./html/:/var/www/html
+      - ./www/:/var/www/html
     ports:
-      - 8101:80
-
+      - 9000:9000
   db:
     image: mariadb:latest
     container_name: phpdb
+    volumes:
+      - ./db/initdb/:/docker-entrypint-initdb.d
+      - ./db/data/:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=maindb
       - MYSQL_USER=root
       - MYSQL_PASSWORD=root
+  nginx:
+    image: nginx:latest
+    container_name: phphost
+    volumes:
+      - ./nginx/conf/nginx.conf:/etc/nginx/conf/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+    volumes_from:
+      - php
+    ports:
+      - 8100:80
+  pma:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    ports:
+      - "8000:80"
