@@ -13,4 +13,15 @@ $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname, $dbport);
 if (!$conn) {
     die("Connection database failed: " . mysqli_connect_error());
 }
-echo "Connected database successfully";
+
+$result = $conn->query("SELECT * FROM users");
+
+echo "Return rows: ", $result->num_rows . "<br>";
+while ($row = $result->fetch_array(MYSQLI_NUM)) {
+    echo $row[1] . "<br>";
+    echo $row[2] . "<br>";
+    echo $row[3] . "<br>";
+}
+echo "EOF";
+
+$result->close();
